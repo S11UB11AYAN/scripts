@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Define an associative array to store YouTube video links with descriptions
+declare -A youtube_links=(
+    ["Lunch Break Seedhe Maut"]="https://www.youtube.com/watch?v=EbX00r6yI5o"
+    ["Open Letter Talha Anjum"]="https://www.youtube.com/watch?v=nm61IpvTXKs"
+    ["Imagine Dragons Playlist"]="https://www.youtube.com/watch?v=5JOaTtcg1tE"
+    ["Nayaab Seedhe Maut"]="https://www.youtube.com/watch?v=s4OTPHhH8Vc"
+    ["न Seedhe Maut"]="https://www.youtube.com/watch?v=PqNN6FrRuws"
+    ["Batti Seedhe Maut"]="https://www.youtube.com/watch?v=Fk0ySAL1dLs"
+    ["Pratham Wavhal - Sukoon"]="https://www.youtube.com/watch?v=teeSkgCEcA4"
+    ["Akhiyaan - MITRAZ"]="https://www.youtube.com/watch?v=T35uru7JCIo"
+    # Add more video links as needed
+)
+
+# Prompt the user to select a video using fzf
+selected_video=$(printf "%s\n" "${!youtube_links[@]}" | fzf --prompt="Select a video: ")
+
+# Get the selected video URL
+video_url=${youtube_links["$selected_video"]}
+
+# Check if the selected video URL is not empty
+if [ -n "$video_url" ]; then
+    # Use mpv to play audio only
+    mpv --no-video "$video_url"
+else
+    echo "Invalid selection or video URL missing."
+fi
